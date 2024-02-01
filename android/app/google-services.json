@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "104327291109",
+    "project_id": "pet-shop-21fe1",
+    "storage_bucket": "pet-shop-21fe1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104327291109:android:f9e198cf5d02f69bf4340c",
+        "android_client_info": {
+          "package_name": "com.chinrust.pet4u"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcn2I8oAyE0UqrTj_8nRScTijge9kaPy8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
