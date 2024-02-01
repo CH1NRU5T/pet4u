@@ -9,6 +9,8 @@ class CustomColors {
   static Color weightColor = const Color(0xffF2B6F7);
   static Color heightColor = const Color(0xffF7B6BE);
   static Color textButtonBackgroundColor = const Color(0xff9088E4);
+  static Color scaffoldBackgroundColorLight = const Color(0xffF7F7F7);
+  static Color scaffoldBackgroundColorDark = const Color(0xff1A1A1A);
   static Color getColorForSpecie(Species species) {
     switch (species) {
       case Species.dog:

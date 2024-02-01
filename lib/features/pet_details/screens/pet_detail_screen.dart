@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pet4u/constants/custom_colors.dart';
+import 'package:pet4u/features/pet_details/widgets/pet_detail_box.dart';
 import 'package:pet4u/models/pet_model.dart';
 
 class PetDetailScreen extends StatelessWidget {
@@ -9,16 +10,6 @@ class PetDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: const Color(0xfffbd9b9),
-      //   elevation: 0,
-      //   actions: [
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: const Icon(Icons.favorite_border),
-      //     ),
-      //   ],
-      // ),
       body: CustomScrollView(
         shrinkWrap: true,
         slivers: [
@@ -61,19 +52,19 @@ class PetDetailScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          DetailBox(
+                          PetDetailBox(
                             value: pet.age.toString(),
                             title: 'Age',
                             color: CustomColors.ageColor,
                           ),
                           const SizedBox(width: 5),
-                          DetailBox(
+                          PetDetailBox(
                             value: pet.weight.toString(),
                             title: 'Weight',
                             color: CustomColors.weightColor,
                           ),
                           const SizedBox(width: 5),
-                          DetailBox(
+                          PetDetailBox(
                             value: pet.height.toString(),
                             title: 'Height',
                             color: CustomColors.heightColor,
@@ -91,7 +82,6 @@ class PetDetailScreen extends StatelessWidget {
                       pet.description,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    // const Spacer(),
                   ],
                 ),
               ),
@@ -121,127 +111,6 @@ class PetDetailScreen extends StatelessWidget {
             ),
           )
         ],
-      ),
-      // SingleChildScrollView(
-      //   child: SizedBox(
-      //     height: MediaQuery.of(context).size.height,
-      //     child: Column(
-      //       children: [
-      //         Expanded(
-      //           flex: 3,
-      //           child: Container(
-      //             decoration: BoxDecoration(
-      //               image: DecorationImage(
-      //                 image: CachedNetworkImageProvider(pet.urlToImage),
-      //                 fit: BoxFit.cover,
-      //               ),
-      //               color: const Color(0xfffbd9b9),
-      //               borderRadius: const BorderRadius.only(
-      //                 bottomLeft: Radius.elliptical(200, 80),
-      //                 bottomRight: Radius.elliptical(200, 80),
-      //               ),
-      //             ),
-      //             child: Hero(
-      //               tag: pet.id,
-      //               child: CachedNetworkImage(
-      //                 imageUrl: pet.urlToImage,
-      //                 fit: BoxFit.cover,
-      //               ),
-      //             ),
-      //           ),
-      //         ),
-      //         Expanded(
-      //           flex: 2,
-      //           child: Padding(
-      //             padding: const EdgeInsets.symmetric(horizontal: 12)
-      //                 .copyWith(bottom: 10),
-      //             child: Column(
-      //               crossAxisAlignment: CrossAxisAlignment.stretch,
-      //               children: [
-      //                 Text(pet.name,
-      //                     style: Theme.of(context).textTheme.headlineLarge),
-      //                 const SizedBox(height: 10),
-      //                 Row(
-      //                   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //                   children: [
-      //                     DetailBox(
-      //                       value: pet.age.toString(),
-      //                       title: 'Age',
-      //                       color: CustomColors.ageColor,
-      //                     ),
-      //                     const SizedBox(width: 5),
-      //                     DetailBox(
-      //                       value: pet.weight.toString(),
-      //                       title: 'Weight',
-      //                       color: CustomColors.weightColor,
-      //                     ),
-      //                     const SizedBox(width: 5),
-      //                     DetailBox(
-      //                       value: pet.height.toString(),
-      //                       title: 'Height',
-      //                       color: CustomColors.heightColor,
-      //                     ),
-      //                   ],
-      //                 ),
-      //                 const SizedBox(height: 10),
-      //                 Text(
-      //                   'About',
-      //                   style: Theme.of(context).textTheme.titleLarge,
-      //                 ),
-      //                 const SizedBox(height: 10),
-      //                 Text(
-      //                   pet.description,
-      //                   style: Theme.of(context).textTheme.bodyLarge,
-      //                 ),
-      //                 const Spacer(),
-      //                 TextButton(
-      //                   onPressed: () {},
-      //                   style: TextButton.styleFrom(),
-      //                   child: Text(
-      //                     'Adopt',
-      //                     style:
-      //                         Theme.of(context).textTheme.titleLarge!.copyWith(
-      //                               color: Colors.white,
-      //                             ),
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-    );
-  }
-}
-
-class DetailBox extends StatelessWidget {
-  const DetailBox(
-      {super.key,
-      required this.value,
-      required this.title,
-      required this.color});
-  final String value;
-  final String title;
-  final Color color;
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        height: 80,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(value, style: Theme.of(context).textTheme.titleLarge),
-            Text(title, style: Theme.of(context).textTheme.bodyLarge),
-          ],
-        ),
       ),
     );
   }

@@ -6,6 +6,8 @@ import 'package:pet4u/features/home/bloc/home_bloc.dart';
 import 'package:pet4u/features/home/bloc/home_event.dart';
 import 'package:pet4u/features/home/bloc/home_state.dart';
 import 'package:pet4u/features/pet_details/screens/pet_detail_screen.dart';
+import 'package:pet4u/features/theme/bloc/theme_bloc.dart';
+import 'package:pet4u/features/theme/bloc/theme_event.dart';
 import 'package:pet4u/models/pet_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,6 +31,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title:
+              Text('Welcome', style: Theme.of(context).textTheme.headlineLarge),
+          actions: [
+            IconButton(
+              onPressed: () {
+                context.read<ThemeBloc>().add(
+                      ThemeChangeEvent(),
+                    );
+              },
+              icon: const Icon(Icons.settings),
+            ),
+          ],
+        ),
+        // backgroundColor: const Color(0xfff7f7f7),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: BlocListener<HomeBloc, HomeState>(
@@ -53,16 +70,50 @@ class _HomeScreenState extends State<HomeScreen> {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Row(
-                        children: [
-                          Expanded(child: TextFormField()),
-                          const SizedBox(width: 10),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.search),
+                      const SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10,
+                              offset: Offset(0, 5),
+                            ),
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10,
+                              offset: Offset(5, 0),
+                            ),
+                          ],
+                        ),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            fillColor: Colors.white,
+                            focusColor: Colors.white,
+                            filled: true,
+                            hintText: 'Search',
+                            prefixIcon: Icon(Icons.search),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
                           ),
-                        ],
+                        ),
                       ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(child: TextFormField()),
+                      //     const SizedBox(width: 10),
+                      //     IconButton(
+                      //       onPressed: () {},
+                      //       icon: const Icon(Icons.search),
+                      //     ),
+                      //   ],
+                      // ),
                       // const SizedBox(height: 10),
                       // const Text('Categories'),
                       // const SizedBox(height: 10),
@@ -129,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   right: 11,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[200],
+                                  color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Column(
