@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet4u/constants/custom_colors.dart';
 import 'package:pet4u/features/pet_details/widgets/pet_detail_box.dart';
+import 'package:pet4u/features/theme/bloc/theme_bloc.dart';
+import 'package:pet4u/features/theme/bloc/theme_event.dart';
 import 'package:pet4u/models/pet_model.dart';
 
 class PetDetailScreen extends StatelessWidget {
@@ -14,6 +17,23 @@ class PetDetailScreen extends StatelessWidget {
         shrinkWrap: true,
         slivers: [
           SliverAppBar(
+            actions: [
+              PopupMenuButton(itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    value: 'logout',
+                    child: Row(
+                      children: [
+                        Text(
+                            '${(context.read<ThemeBloc>().isDark ?? false) ? 'Light' : 'Dark'} mode'),
+                      ],
+                    ),
+                  ),
+                ];
+              }, onSelected: (_) {
+                context.read<ThemeBloc>().add(ThemeChangeEvent());
+              }),
+            ],
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.elliptical(300, 100),

@@ -18,10 +18,12 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       emit(await completer.future);
     });
     on<ThemeChangeEvent>((event, emit) async {
+      Completer<ThemeState> completer = Completer();
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isDark', !isDark!);
+      await prefs.setBool('isDark', !isDark!);
       isDark = !isDark!;
-      emit(ThemeChangedState(isDark! ? customLightTheme : customDarkTheme));
+      completer.complete(ThemeChangedState(currentTheme));
+      emit(await completer.future);
     });
     on<ThemeGetEvent>((event, emit) {
       emit(ThemeCurrentState(currentTheme));

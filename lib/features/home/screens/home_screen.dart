@@ -35,14 +35,21 @@ class _HomeScreenState extends State<HomeScreen> {
           title:
               Text('Welcome', style: Theme.of(context).textTheme.headlineLarge),
           actions: [
-            IconButton(
-              onPressed: () {
-                context.read<ThemeBloc>().add(
-                      ThemeChangeEvent(),
-                    );
-              },
-              icon: const Icon(Icons.settings),
-            ),
+            PopupMenuButton(itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  value: 'logout',
+                  child: Row(
+                    children: [
+                      Text(
+                          '${(context.read<ThemeBloc>().isDark ?? false) ? 'Light' : 'Dark'} mode'),
+                    ],
+                  ),
+                ),
+              ];
+            }, onSelected: (_) {
+              context.read<ThemeBloc>().add(ThemeChangeEvent());
+            }),
           ],
         ),
         // backgroundColor: const Color(0xfff7f7f7),
@@ -143,7 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('${pets!.length} results'),
+                          Text(
+                            '${pets!.length} results',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
                           // TextButton(
                           //   onPressed: () {},
                           //   child: const Text('See all'),

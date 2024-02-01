@@ -25,6 +25,11 @@ ThemeData customLightTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: Colors.black,
     ),
+    headlineMedium: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    ),
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
@@ -71,9 +76,14 @@ ThemeData customDarkTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: Colors.white,
     ),
+    headlineMedium: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
   ),
-  appBarTheme: const AppBarTheme(
-    color: Colors.black,
+  appBarTheme: AppBarTheme(
+    color: CustomColors.scaffoldBackgroundColorDark,
     scrolledUnderElevation: 0,
   ),
   scaffoldBackgroundColor: CustomColors.scaffoldBackgroundColorDark,
