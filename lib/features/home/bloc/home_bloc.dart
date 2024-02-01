@@ -5,16 +5,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet4u/features/home/bloc/home_event.dart';
 import 'package:pet4u/features/home/bloc/home_state.dart';
 import 'package:pet4u/models/pet_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  List<String>? adoptedPets;
   HomeBloc() : super(HomeInit()) {
+    on<AdoptPet>((event, emit) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      adoptedPets = prefs.getStringList('adoptedPets') ?? [];
+      adoptedPets!.add(event.petID);
+      await prefs.setStringList('adoptedPets', adoptedPets!);
+
+      emit(PetAdoptedState(petID: event.petID));
+    });
     on<HomeLoadEvent>((event, emit) async {
       Completer<HomeState> completer = Completer();
       emit(HomeLoading());
       try {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        adoptedPets = prefs.getStringList('adoptedPets') ?? [];
         List<Pet> pets = await fetchAllPets();
-        Set<Species> species = getSpecies(pets);
-        completer.complete(HomeLoaded(pets: pets, species: species));
+
+        completer.complete(
+          HomeLoaded(
+            pets: pets,
+            adoptedPets: adoptedPets!,
+          ),
+        );
       } catch (e) {
         completer.complete(HomeError(message: e.toString()));
       }
@@ -28,14 +45,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return qs.docs
         .map((e) => Pet.fromMap(e.data() as Map<String, dynamic>)..id = e.id)
         .toList();
-  }
-
-  Set<Species> getSpecies(List<Pet> pets) {
-    Set<Species> species = {};
-    for (var pet in pets) {
-      species.add(pet.species);
-    }
-    return species;
   }
 
   // final HomeRepository homeRepository;

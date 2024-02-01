@@ -14,7 +14,12 @@ class HomeError extends HomeState {
 
 class HomeLoaded extends HomeState {
   final List<Pet> pets;
-  final Set<Species> species;
+  final List<String> adoptedPets;
+  HomeLoaded({required this.pets, required this.adoptedPets});
+}
 
-  HomeLoaded({required this.pets, required this.species});
+class PetAdoptedState extends HomeState {
+  final String petID;
+
+  PetAdoptedState({required this.petID});
 }

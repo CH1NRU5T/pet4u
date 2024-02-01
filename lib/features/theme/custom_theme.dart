@@ -35,6 +35,7 @@ ThemeData customLightTheme = ThemeData(
     style: TextButton.styleFrom(
       backgroundColor: CustomColors.textButtonBackgroundColor,
       padding: const EdgeInsets.symmetric(vertical: 20),
+      disabledBackgroundColor: Colors.grey,
     ),
   ),
   appBarTheme: const AppBarTheme(
@@ -58,6 +59,7 @@ ThemeData customDarkTheme = ThemeData(
     style: TextButton.styleFrom(
       backgroundColor: CustomColors.textButtonBackgroundColor,
       padding: const EdgeInsets.symmetric(vertical: 20),
+      disabledBackgroundColor: Colors.grey,
     ),
   ),
   textTheme: const TextTheme(

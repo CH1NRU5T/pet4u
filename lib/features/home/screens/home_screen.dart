@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Pet>? pets;
-
+  List<String>? adoptedPets;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,6 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BlocListener<HomeBloc, HomeState>(
             bloc: BlocProvider.of<HomeBloc>(context),
             listener: (context, state) {
+              if (state is PetAdoptedState) {
+                setState(() {
+                  adoptedPets!.add(state.petID);
+                });
+              }
               if (state is HomeError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -69,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state is HomeLoaded) {
                 setState(() {
                   pets = state.pets;
+                  adoptedPets = state.adoptedPets;
                 });
               }
             },
@@ -178,7 +184,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return PetDetailScreen(pet: pets![index]);
+                                      return PetDetailScreen(
+                                        pet: pets![index],
+                                      );
                                     },
                                   ),
                                 );
@@ -190,7 +198,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   right: 11,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: adoptedPets!.contains(pets![index].id)
+                                      ? Colors.grey
+                                      : Colors.white,
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Column(

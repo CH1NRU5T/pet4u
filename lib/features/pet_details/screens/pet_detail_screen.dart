@@ -1,15 +1,38 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet4u/constants/custom_colors.dart';
+import 'package:pet4u/features/home/bloc/home_bloc.dart';
+import 'package:pet4u/features/home/bloc/home_event.dart';
+import 'package:pet4u/features/home/bloc/home_state.dart';
 import 'package:pet4u/features/pet_details/widgets/pet_detail_box.dart';
 import 'package:pet4u/features/theme/bloc/theme_bloc.dart';
 import 'package:pet4u/features/theme/bloc/theme_event.dart';
 import 'package:pet4u/models/pet_model.dart';
 
-class PetDetailScreen extends StatelessWidget {
+class PetDetailScreen extends StatefulWidget {
   const PetDetailScreen({super.key, required this.pet});
   final Pet pet;
+
+  @override
+  State<PetDetailScreen> createState() => _PetDetailScreenState();
+}
+
+class _PetDetailScreenState extends State<PetDetailScreen> {
+  late ConfettiController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = ConfettiController(duration: const Duration(seconds: 1));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,9 +68,9 @@ class PetDetailScreen extends StatelessWidget {
             elevation: 0,
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
-                tag: pet.id,
+                tag: widget.pet.id,
                 child: CachedNetworkImage(
-                  imageUrl: pet.urlToImage,
+                  imageUrl: widget.pet.urlToImage,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -62,7 +85,7 @@ class PetDetailScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      pet.name,
+                      widget.pet.name,
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
                     const SizedBox(height: 10),
@@ -73,19 +96,19 @@ class PetDetailScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           PetDetailBox(
-                            value: pet.age.toString(),
+                            value: widget.pet.age.toString(),
                             title: 'Age',
                             color: CustomColors.ageColor,
                           ),
                           const SizedBox(width: 5),
                           PetDetailBox(
-                            value: pet.weight.toString(),
+                            value: widget.pet.weight.toString(),
                             title: 'Weight',
                             color: CustomColors.weightColor,
                           ),
                           const SizedBox(width: 5),
                           PetDetailBox(
-                            value: pet.height.toString(),
+                            value: widget.pet.height.toString(),
                             title: 'Height',
                             color: CustomColors.heightColor,
                           ),
@@ -99,7 +122,7 @@ class PetDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      pet.description,
+                      widget.pet.description,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -116,15 +139,75 @@ class PetDetailScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   const Spacer(),
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(),
-                    child: Text(
-                      'Adopt',
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
+                  BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      bool isAdopted = context
+                          .watch<HomeBloc>()
+                          .adoptedPets!
+                          .contains(widget.pet.id);
+                      return TextButton(
+                        onPressed: isAdopted
+                            ? null
+                            : () {
+                                context.read<HomeBloc>().add(
+                                      AdoptPet(petID: widget.pet.id),
+                                    );
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: ConfettiWidget(
+                                              confettiController: _controller,
+                                              blastDirectionality:
+                                                  BlastDirectionality.explosive,
+                                              particleDrag: 0.05,
+                                              emissionFrequency: 0.05,
+                                              numberOfParticles: 50,
+                                              gravity: 0.0,
+                                              shouldLoop: true,
+                                              colors: const [
+                                                Colors.green,
+                                                Colors.blue,
+                                                Colors.pink,
+                                                Colors.orange,
+                                                Colors.purple,
+                                              ]),
+                                        ),
+                                        AlertDialog(
+                                          title: Text(
+                                            'Pet adopted!',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineMedium,
+                                          ),
+                                          content: Text(
+                                            'You have successfully adopted ${widget.pet.name}!',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                _controller.play();
+                              },
+                        style: TextButton.styleFrom(
+                          disabledBackgroundColor: Colors.grey,
+                        ),
+                        child: Text(
+                          isAdopted ? 'Adopted' : 'Adopt',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(color: Colors.white),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
