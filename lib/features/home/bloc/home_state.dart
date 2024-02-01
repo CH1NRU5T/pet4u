@@ -23,3 +23,9 @@ class PetAdoptedState extends HomeState {
 
   PetAdoptedState({required this.petID});
 }
+
+class PetSearchedState extends HomeState {
+  final List<Pet> pets;
+
+  PetSearchedState({required this.pets});
+}

@@ -63,7 +63,11 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                 bottomRight: Radius.elliptical(300, 100),
               ),
             ),
-            backgroundColor: const Color(0xfffbd9b9),
+            backgroundColor: widget.pet.species == Species.cat
+                ? CustomColors.catColor
+                : widget.pet.species == Species.dog
+                    ? CustomColors.dogColor
+                    : CustomColors.otherColor,
             expandedHeight: MediaQuery.of(context).size.height * 0.5,
             elevation: 0,
             flexibleSpace: FlexibleSpaceBar(

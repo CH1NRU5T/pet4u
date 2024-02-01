@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:pet4u/constants/custom_colors.dart';
 
 ThemeData customLightTheme = ThemeData(
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    backgroundColor: CustomColors.scaffoldBackgroundColorLight,
+    selectedItemColor: CustomColors.scaffoldBackgroundColorDark,
+    unselectedItemColor: Colors.grey,
+    elevation: 0,
+  ),
   chipTheme: const ChipThemeData(
     selectedColor: Colors.red,
     padding: EdgeInsets.all(8),
@@ -41,6 +47,7 @@ ThemeData customLightTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     color: Colors.white,
     scrolledUnderElevation: 0,
+    iconTheme: IconThemeData(color: Colors.black),
   ),
   colorScheme: ColorScheme.fromSeed(
     seedColor: CustomColors.scaffoldBackgroundColorLight,
@@ -87,6 +94,7 @@ ThemeData customDarkTheme = ThemeData(
   appBarTheme: AppBarTheme(
     color: CustomColors.scaffoldBackgroundColorDark,
     scrolledUnderElevation: 0,
+    iconTheme: const IconThemeData(color: Colors.white),
   ),
   scaffoldBackgroundColor: CustomColors.scaffoldBackgroundColorDark,
   colorScheme: ColorScheme.fromSeed(

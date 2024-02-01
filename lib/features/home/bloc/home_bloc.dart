@@ -9,7 +9,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   List<String>? adoptedPets;
+  List<Pet> pets = [];
+
   HomeBloc() : super(HomeInit()) {
+    on<PetSearch>((event, emit) {
+      if (event.query.isEmpty) {
+        return emit(HomeLoaded(pets: this.pets, adoptedPets: adoptedPets!));
+      }
+      List<Pet> pets = [];
+      for (Pet pet in this.pets) {
+        if (pet.name.toLowerCase().contains(event.query.toLowerCase())) {
+          pets.add(pet);
+        }
+      }
+      emit(PetSearchedState(pets: pets));
+    });
     on<AdoptPet>((event, emit) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       adoptedPets = prefs.getStringList('adoptedPets') ?? [];
@@ -25,7 +39,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         adoptedPets = prefs.getStringList('adoptedPets') ?? [];
         List<Pet> pets = await fetchAllPets();
-
+        this.pets = pets;
         completer.complete(
           HomeLoaded(
             pets: pets,
