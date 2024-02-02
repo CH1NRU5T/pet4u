@@ -15,14 +15,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // QuerySnapshot qs = await FirebaseFirestore.instance.collection('pets').get();
-  // for (var pet in qs.docs) {
-  //   Pet p = Pet.fromMap(pet.data() as Map<String, dynamic>);
-  //   p.id = pet.id;
-  //   await FirebaseFirestore.instance.collection('pets').doc(p.id).update({
-  //     'price': Random().nextInt(1000) + 100,
-  //   });
-  // }
   runApp(
     MultiBlocProvider(
       providers: [
