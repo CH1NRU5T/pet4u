@@ -75,7 +75,7 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                 tag: widget.pet.id,
                 child: CachedNetworkImage(
                   imageUrl: widget.pet.urlToImage,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
@@ -100,19 +100,19 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           PetDetailBox(
-                            value: widget.pet.age.toString(),
+                            value: '${widget.pet.age} months',
                             title: 'Age',
                             color: CustomColors.ageColor,
                           ),
                           const SizedBox(width: 5),
                           PetDetailBox(
-                            value: widget.pet.weight.toString(),
+                            value: '${widget.pet.weight} kg',
                             title: 'Weight',
                             color: CustomColors.weightColor,
                           ),
                           const SizedBox(width: 5),
                           PetDetailBox(
-                            value: widget.pet.height.toString(),
+                            value: '${widget.pet.height} cm',
                             title: 'Height',
                             color: CustomColors.heightColor,
                           ),

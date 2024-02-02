@@ -21,8 +21,18 @@ class PetDetailBox extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(value, style: Theme.of(context).textTheme.titleLarge),
-            Text(title, style: Theme.of(context).textTheme.bodyLarge),
+            Text(
+              value,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Colors.black,
+                  ),
+            ),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Colors.grey.shade800,
+                  ),
+            ),
           ],
         ),
       ),

@@ -26,11 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     context.read<HomeBloc>().add(HomeLoadEvent());
     _searchController = TextEditingController();
-    _searchController.addListener(() {
-      setState(() {
-        search = _searchController.text;
-      });
-    });
   }
 
   @override
@@ -49,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Pet>? pets;
   List<String>? adoptedPets;
-  String search = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,9 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      // backgroundColor: const Color(0xfff7f7f7),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12),
         child: BlocListener<HomeBloc, HomeState>(
           bloc: BlocProvider.of<HomeBloc>(context),
           listener: (context, state) {
@@ -195,8 +189,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: Colors.grey),
                                 )
                               : null,
-                          // suffixIcon:
-                          //     searching ? const Icon(Icons.close) : null,
                           border: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(
@@ -206,41 +198,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    // Row(
-                    //   children: [
-                    //     Expanded(child: TextFormField()),
-                    //     const SizedBox(width: 10),
-                    //     IconButton(
-                    //       onPressed: () {},
-                    //       icon: const Icon(Icons.search),
-                    //     ),
-                    //   ],
-                    // ),
-                    // const SizedBox(height: 10),
-                    // const Text('Categories'),
-                    // const SizedBox(height: 10),
-                    // SizedBox(
-                    //   height: 40,
-                    //   child: ListView.separated(
-                    //     separatorBuilder: (context, index) {
-                    //       return const SizedBox(width: 10);
-                    //     },
-                    //     scrollDirection: Axis.horizontal,
-                    //     shrinkWrap: true,
-                    //     physics: const ClampingScrollPhysics(),
-                    //     itemCount: species!.length,
-                    //     itemBuilder: (context, index) {
-                    //       return ChoiceChip(
-                    //         showCheckmark: false,
-                    //         onSelected: (isSelected) {
-                    //           print(isSelected);
-                    //         },
-                    //         selected: false,
-                    //         label: Text(species!.elementAt(index)),
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
                     const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -249,10 +206,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           '${pets!.length} results',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
-                        // TextButton(
-                        //   onPressed: () {},
-                        //   child: const Text('See all'),
-                        // )
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -267,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisSpacing: 10,
                         ),
                         itemBuilder: (context, index) {
-                          return InkWell(
+                          return GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -300,20 +253,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: CustomColors.getColorForSpecie(
                                           pets![index].species,
                                         ),
-
-                                        // image: DecorationImage(
-                                        //   image: CachedNetworkImageProvider(
-                                        //     pets![index].urlToImage,
-                                        //   ),
-                                        //   fit: BoxFit.cover,
-                                        // ),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: Hero(
                                         tag: pets![index].id,
                                         child: CachedNetworkImage(
                                           imageUrl: pets![index].urlToImage,
-                                          fit: BoxFit.cover,
+                                          fit: BoxFit.contain,
                                         ),
                                       ),
                                     ),
@@ -321,6 +267,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ListTile(
                                     title: Text(pets![index].name),
                                     subtitle: Text(pets![index].breed),
+                                    trailing: Text(
+                                      '\$${pets![index].price}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    ),
                                   ),
                                 ],
                               ),

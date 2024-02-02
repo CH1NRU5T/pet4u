@@ -26,6 +26,7 @@ class Pet {
   final num height;
   final Species species;
   final num weight;
+  final num price;
 
   Pet({
     required this.name,
@@ -36,6 +37,7 @@ class Pet {
     required this.height,
     required this.species,
     required this.weight,
+    required this.price,
     this.id = '',
   });
 
@@ -50,6 +52,7 @@ class Pet {
       'height': height,
       'species': species.toString().split('.').last,
       'weight': weight,
+      'price': price,
     };
   }
 
@@ -61,6 +64,7 @@ class Pet {
       age: map['age'] as num,
       breed: map['breed'] as String,
       height: map['height'] as num,
+      price: map['price'] as num,
       species: Species.values.firstWhere(
         (e) => e.toString() == 'Species.${map['species']}',
       ),

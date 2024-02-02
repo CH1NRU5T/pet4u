@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pet4u/constants/custom_colors.dart';
 
 ThemeData customLightTheme = ThemeData(
+  primaryColor: CustomColors.scaffoldBackgroundColorLight,
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: CustomColors.scaffoldBackgroundColorLight,
     selectedItemColor: CustomColors.scaffoldBackgroundColorDark,
@@ -101,4 +102,9 @@ ThemeData customDarkTheme = ThemeData(
     seedColor: CustomColors.scaffoldBackgroundColorDark,
   ),
   useMaterial3: true,
+  primaryColor: CustomColors.scaffoldBackgroundColorDark,
+  dialogBackgroundColor: CustomColors.scaffoldBackgroundColorDark,
+  dialogTheme: DialogTheme(
+    backgroundColor: CustomColors.scaffoldBackgroundColorDark,
+  ),
 );

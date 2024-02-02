@@ -89,7 +89,7 @@ class HistoryScreen extends StatelessWidget {
                                 height: 200,
                                 child: CachedNetworkImage(
                                   imageUrl: adopted[index].urlToImage,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.contain,
                                 ),
                               ),
                               const SizedBox(height: 5),
