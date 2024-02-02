@@ -88,9 +88,18 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      widget.pet.name,
-                      style: Theme.of(context).textTheme.headlineLarge,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.pet.name,
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                        Text(
+                          '\$${widget.pet.price}',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
